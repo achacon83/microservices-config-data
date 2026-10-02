@@ -23,30 +23,30 @@ spring:
       # 2. Configuración de SERVIDOR (Necesaria para validar entrada)
       resourceserver:
         jwt:
-          issue-uri: http://localhost:8080/realms/ecommerce-realm
-    cloud:
-      gateway:
-        # 3. Filtro Global: Pasa el token a TODOS los microservicios
-        default-filters:
-          - TokenRelay
+          issuer-uri: http://localhost:8080/realms/ecommerce-realm
+  cloud:
+    gateway:
+      # 3. Filtro Global: Pasa el token a TODOS los microservicios
+      default-filters:
+        - TokenRelay
 
-        routes:
-          # Ruta a Microservicio de Productos
-          - id: product-service
-            uri: lb://product-service
-            predicates:
-              - Path=/api/v1/product/**
+      routes:
+        # Ruta a Microservicio de Productos
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/v1/product/**
 
-          # Ruta a Microservicio de Órdenes
-          - id: order-service
-            uri: lb://order-service
-            predicates:
-              - Path=/api/v1/order/**
+        # Ruta a Microservicio de Órdenes
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/api/v1/orders/**
 
-          # Ruta a Microservicio de Inventario
-          - id: inventory-service
-            uri: lb://inventory-service
-            predicates:
-              - Path=/api/v1/inventory/**
+        # Ruta a Microservicio de Inventario
+        - id: inventory-service
+          uri: lb://inventory-service
+          predicates:
+            - Path=/api/v1/inventory/**
 server:
   port: 9000
